@@ -1,0 +1,48 @@
+<!--
+ FILE PURPOSE: This HTML file defines the structure and content of one screen in Epoka Tutor. The ids and classes are important connections: JavaScript finds elements by their ids to fill or update them, while CSS uses classes and ids to control their appearance.
+ SCREEN: Epoka Tutor - Chat.
+ The ids in this file are the connection points used by JavaScript; the classes are the connection points used by CSS.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epoka Tutor - Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="chat-page">
+    <!-- The header contains navigation and the signed-in student controls. The data-who and data-logout attributes are hooks used by Auth.require() in common.js to insert the student name and attach the logout action. -->
+    <header class="top">
+        <!-- chat.js changes this link depending on whether the conversation is private or belongs to a course. -->
+        <a class="ghost" id="chatBack" href="courses.html">← Back</a>
+        <div class="chat-person">
+        <!-- chat.js fills this heading with the other student’s name or the selected course name, depending on the conversation type. -->
+            <b id="chatTitle">Chat</b>
+        <!-- chat.js describes whether the current conversation is a private student chat or a course discussion. -->
+            <small id="chatSubtitle"></small>
+        </div>
+        <span class="who" data-who></span>
+    </header>
+
+    <!-- This is the main content area for the current screen. Its id or class connects it to the CSS layout, and its child elements provide the places JavaScript fills with courses, messages, notes, or selection buttons. -->
+        <!-- chat.js rebuilds this message area from the messages saved in localStorage. The aria-live attribute allows assistive technology to be informed when its content changes. -->
+    <main id="msgs" aria-live="polite"></main>
+
+    <!-- This form groups related inputs and buttons. JavaScript listens for its submit event; event.preventDefault() is then used where needed so the browser does not reload the page before the application handles the data. -->
+        <!-- chat.js listens for submission of this form and calls sendMessage() to save and display the new message. -->
+    <form id="composer">
+        <div class="row">
+        <!-- chat.js reads the typed message from this textarea, and its keydown listener also allows Enter to send it. -->
+            <textarea id="text" rows="1" placeholder="Write a message..."></textarea>
+            <button class="btn" type="submit">Send</button>
+        </div>
+    </form>
+
+    <!-- Load common.js before the page-specific script because it defines shared functions such as store, Auth, Pick, and the storage-key helpers that the later script calls. -->
+    <script src="js/common.js"></script>
+    <!-- Load the JavaScript file responsible for this screen after the shared scripts. The script uses the element ids in this HTML to add behaviour and display stored information. -->
+    <script src="js/chat.js"></script>
+</body>
+</html>

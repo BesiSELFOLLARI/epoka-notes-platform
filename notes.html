@@ -1,0 +1,86 @@
+<!--
+ FILE PURPOSE: This HTML file defines the structure and content of one screen in Epoka Tutor. The ids and classes are important connections: JavaScript finds elements by their ids to fill or update them, while CSS uses classes and ids to control their appearance.
+ SCREEN: Epoka Tutor - Notes.
+ The ids in this file are the connection points used by JavaScript; the classes are the connection points used by CSS.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epoka Tutor - Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- The header contains navigation and the signed-in student controls. The data-who and data-logout attributes are hooks used by Auth.require() in common.js to insert the student name and attach the logout action. -->
+    <header class="top">
+        <!-- This link returns to the current course workspace; notes.js keeps the course context in the stored selection. -->
+        <a class="ghost" id="backCourse" href="courses.html">← Back to Course</a>
+        <span>
+            <span class="who" data-who></span>
+            <button class="ghost" data-logout>Log Out</button>
+        </span>
+    </header>
+
+    <!-- This is the main content area for the current screen. Its id or class connects it to the CSS layout, and its child elements provide the places JavaScript fills with courses, messages, notes, or selection buttons. -->
+    <main class="wrap wide">
+        <p class="eyebrow">COURSE NOTES</p>
+        <h1 id="notesTitle">My Notes</h1>
+        <p class="lead" id="notesCrumb"></p>
+
+    <!-- This section groups one related part of the screen. The heading and content inside it belong together, and its class or id lets CSS control the section layout. -->
+        <section class="panel">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">CREATE OR UPDATE</p>
+        <!-- notes.js changes this heading between Add a Note and Edit Note to show which form mode is active. -->
+                    <h2 id="formHeading">Add a Note</h2>
+                </div>
+            </div>
+
+    <!-- This form groups related inputs and buttons. JavaScript listens for its submit event; event.preventDefault() is then used where needed so the browser does not reload the page before the application handles the data. -->
+        <!-- notes.js handles this form’s submit event to add a new note or update the note currently being edited. -->
+            <form id="noteForm" class="note-form">
+                <label for="noteTitle">Title</label>
+        <!-- notes.js reads this field as the title of the note and places the selected title here when Edit is clicked. -->
+                <input id="noteTitle" type="text" maxlength="100"
+                       placeholder="E.g. Java - Arrays" required>
+
+                <label for="noteContent">Content</label>
+        <!-- notes.js reads this textarea as the note body and fills it with existing content during editing. -->
+                <textarea id="noteContent" rows="7"
+                          placeholder="Write your notes here..." required></textarea>
+
+                <div class="note-actions">
+        <!-- notes.js changes this button label when editing so the action reads Save Changes instead of Save Note. -->
+                    <button class="btn" type="submit" id="saveNote">Save Note</button>
+        <!-- notes.js reveals this button while editing and attaches resetForm() so the student can leave edit mode. -->
+                    <button class="ghost" type="button" id="cancelEdit" hidden>Cancel</button>
+                </div>
+        <!-- notes.js displays empty-field and storage errors here without replacing the form itself. -->
+                <p class="err" id="noteError" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="panel">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">SAVED NOTES</p>
+                    <h2>Your Notes</h2>
+                </div>
+        <!-- notes.js updates this element with the number of notes belonging to the current course. -->
+                <span class="count" id="noteCount"></span>
+            </div>
+        <!-- notes.js inserts each saved note card into this container after reading the selected course’s notes from localStorage. -->
+            <div id="notesList" class="notes-list"></div>
+        </section>
+    </main>
+
+    <!-- Load common.js before the page-specific script because it defines shared functions such as store, Auth, Pick, and the storage-key helpers that the later script calls. -->
+    <script src="js/common.js"></script>
+    <!-- Load the JavaScript file responsible for this screen after the shared scripts. The script uses the element ids in this HTML to add behaviour and display stored information. -->
+    <script src="js/notes.js"></script>
+</body>
+</html>
