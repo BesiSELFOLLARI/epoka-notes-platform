@@ -1,0 +1,98 @@
+<!--
+ FILE PURPOSE: This HTML file defines the structure and content of one screen in Epoka Tutor. The ids and classes are important connections: JavaScript finds elements by their ids to fill or update them, while CSS uses classes and ids to control their appearance.
+ SCREEN: Epoka Tutor - Courses.
+ The ids in this file are the connection points used by JavaScript; the classes are the connection points used by CSS.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epoka Tutor - Courses</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- The header contains navigation and the signed-in student controls. The data-who and data-logout attributes are hooks used by Auth.require() in common.js to insert the student name and attach the logout action. -->
+    <header class="top">
+        <b>Epoka Tutor</b>
+
+        <span>
+            <span class="who" data-who></span>
+            <button class="ghost" data-logout>Log Out</button>
+        </span>
+    </header>
+
+    <!-- This is the main content area for the current screen. Its id or class connects it to the CSS layout, and its child elements provide the places JavaScript fills with courses, messages, notes, or selection buttons. -->
+    <main class="wrap wide">
+
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">YOUR ACADEMIC SPACE</p>
+                <h1>Connections that help you learn.</h1>
+        <!-- courses.js fills this container with the current faculty, department, and year so the student can see which course list they are viewing. -->
+                <div class="crumbs" id="crumbs"></div>
+            </div>
+
+            <a class="ghost" href="select.html">
+                Change Selection
+            </a>
+        </div>
+
+    <!-- This section groups one related part of the screen. The heading and content inside it belong together, and its class or id lets CSS control the section layout. -->
+        <section class="panel">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">01 / COURSES</p>
+                    <h2>Discuss a Course</h2>
+                </div>
+
+        <!-- courses.js updates this element with the number of courses shown for the selected academic year. -->
+                <span class="count" id="courseCount"></span>
+            </div>
+
+        <!-- courses.js listens for input here and filters the course list as the student types. -->
+            <input class="search" id="q" type="search"
+                   placeholder="Search courses...">
+
+        <!-- courses.js creates the course links inside this container after reading the selected faculty, department, and year. -->
+            <div id="courseList" class="course-grid"></div>
+
+        </section>
+
+        <section class="panel">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">02 / COMMUNITY</p>
+                    <h2>Find Students</h2>
+                </div>
+
+                <span class="count">Private Chat</span>
+            </div>
+
+            <p class="muted">
+                Select a student to start a private conversation.
+            </p>
+
+        <!-- courses.js creates private-chat links for the other registered students inside this container. -->
+            <div id="studentList" class="student-grid"></div>
+
+        </section>
+
+    </main>
+
+    <!-- Load common.js before the page-specific script because it defines shared functions such as store, Auth, Pick, and the storage-key helpers that the later script calls. -->
+    <script src="js/common.js"></script>
+    <!-- Load the academic DATA object before select.js or courses.js because those scripts read it to build the faculty, department, year, and course choices. -->
+    <script src="js/data.js"></script>
+    <!-- Load the JavaScript file responsible for this screen after the shared scripts. The script uses the element ids in this HTML to add behaviour and display stored information. -->
+    <script src="js/courses.js"></script>
+
+</body>
+</html>
