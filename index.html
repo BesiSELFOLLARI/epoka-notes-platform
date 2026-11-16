@@ -1,0 +1,91 @@
+<!--
+ FILE PURPOSE: This HTML file defines the structure and content of one screen in Epoka Tutor. The ids and classes are important connections: JavaScript finds elements by their ids to fill or update them, while CSS uses classes and ids to control their appearance.
+ SCREEN: Epoka Tutor - Login.
+ The ids in this file are the connection points used by JavaScript; the classes are the connection points used by CSS.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epoka Tutor - Login</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login">
+
+    <!-- This is the main content area for the current screen. Its id or class connects it to the CSS layout, and its child elements provide the places JavaScript fills with courses, messages, notes, or selection buttons. -->
+    <main class="wrap">
+        <div class="brand">ET</div>
+
+        <p class="eyebrow">EPOKA STUDENT COMMUNITY</p>
+
+        <h1 id="formTitle">Welcome back.</h1>
+
+        <p class="lead">
+            Connect with other students, discuss courses, and help each other.
+        </p>
+
+    <!-- This form groups related inputs and buttons. JavaScript listens for its submit event; event.preventDefault() is then used where needed so the browser does not reload the page before the application handles the data. -->
+        <!-- This id is used by login.js to listen for form submission and by the browser to group the login and registration fields. -->
+        <form id="loginForm">
+
+        <!-- login.js shows this container only in registration mode, because a returning student does not need to enter a name again. -->
+            <div id="nameField" hidden>
+                <label for="studentName">Your Name</label>
+        <!-- login.js reads this input when creating a new account; the name is required only when registerMode is true. -->
+                <input type="text" id="studentName"
+                       placeholder="Enter your name">
+            </div>
+
+            <label for="studentEmail">University Email</label>
+        <!-- login.js reads and normalizes this email before checking that it uses the Epoka university domain. -->
+            <input type="email" id="studentEmail"
+                   placeholder="student@epoka.edu.al" required>
+
+            <label for="studentPassword">Password</label>
+        <!-- login.js reads this password for both account creation and login, while minlength provides a basic HTML form check. -->
+            <input type="password" id="studentPassword"
+                   placeholder="At least 6 characters"
+                   required minlength="6">
+
+        <!-- This container is shown only during registration so the student can confirm the password they entered. -->
+            <div id="confirmPasswordField" hidden>
+                <label for="confirmPassword">Confirm Password</label>
+        <!-- login.js compares this value with the first password before allowing a new account to be created. -->
+                <input type="password" id="confirmPassword"
+                       placeholder="Enter your password again">
+            </div>
+
+            <button class="btn full" type="submit" id="submitBtn">
+                Log in to Epoka Tutor
+            </button>
+
+        </form>
+
+        <p class="switch-line">
+            <span id="switchText">Don't have an account?</span>
+        <!-- login.js listens for clicks on this button and switches the same form between login and registration instead of navigating to another page. -->
+            <button type="button" class="text-btn" id="switchMode">
+                Create Account
+            </button>
+        </p>
+
+        <p class="note">Epoka Tutor demo version.</p>
+
+        <!-- login.js writes validation and account error messages here using textContent, leaving the HTML structure unchanged. -->
+        <p class="err" id="loginErr"></p>
+
+    </main>
+
+    <!-- Load common.js before the page-specific script because it defines shared functions such as store, Auth, Pick, and the storage-key helpers that the later script calls. -->
+    <script src="js/common.js"></script>
+    <!-- Load the JavaScript file responsible for this screen after the shared scripts. The script uses the element ids in this HTML to add behaviour and display stored information. -->
+    <script src="js/login.js"></script>
+
+</body>
+</html>
