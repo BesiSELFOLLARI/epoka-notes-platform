@@ -1,0 +1,78 @@
+<!--
+ FILE PURPOSE: This HTML file defines the structure and content of one screen in Epoka Tutor. The ids and classes are important connections: JavaScript finds elements by their ids to fill or update them, while CSS uses classes and ids to control their appearance.
+ SCREEN: Epoka Tutor - Select Department.
+ The ids in this file are the connection points used by JavaScript; the classes are the connection points used by CSS.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epoka Tutor - Select Department</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- The header contains navigation and the signed-in student controls. The data-who and data-logout attributes are hooks used by Auth.require() in common.js to insert the student name and attach the logout action. -->
+    <header class="top">
+        <b>Epoka Tutor</b>
+
+        <span>
+            <span class="who" data-who></span>
+            <button class="ghost" data-logout>Log Out</button>
+        </span>
+    </header>
+
+    <!-- This is the main content area for the current screen. Its id or class connects it to the CSS layout, and its child elements provide the places JavaScript fills with courses, messages, notes, or selection buttons. -->
+    <main class="wrap wide">
+
+        <p class="eyebrow">PERSONALIZE YOUR SPACE</p>
+
+        <h1>What are you studying?</h1>
+
+        <p class="lead">
+            Select your faculty, department, and year to see your courses.
+        </p>
+
+    <!-- This section groups one related part of the screen. The heading and content inside it belong together, and its class or id lets CSS control the section layout. -->
+        <!-- This is the first step of the academic selection. The faculty choices are displayed here before a department can be selected. -->
+        <section id="s-fac">
+            <p class="section-label">01 / Faculty</p>
+        <!-- select.js inserts one button per faculty into this container using the DATA object from data.js. -->
+            <div class="choices" id="facList"></div>
+        </section>
+
+        <!-- select.js removes the hidden state after a faculty is chosen, so the department step appears only when its data is available. -->
+        <section id="s-dep" hidden>
+            <p class="section-label">02 / Department</p>
+        <!-- select.js inserts departments for the faculty selected in the previous step. -->
+            <div class="choices" id="depList"></div>
+        </section>
+
+        <!-- select.js reveals this step only after a department has been selected, because the available years depend on both faculty and department. -->
+        <section id="s-year" hidden>
+            <p class="section-label">03 / Year</p>
+        <!-- select.js inserts the available study years for the selected department. -->
+            <div class="choices years" id="yearList"></div>
+        </section>
+
+        <!-- select.js keeps this button disabled until faculty, department, and year are all selected; clicking it then opens courses.html. -->
+        <button class="btn" id="next" disabled>
+            View Courses →
+        </button>
+
+    </main>
+
+    <!-- Load common.js before the page-specific script because it defines shared functions such as store, Auth, Pick, and the storage-key helpers that the later script calls. -->
+    <script src="js/common.js"></script>
+    <!-- Load the academic DATA object before select.js or courses.js because those scripts read it to build the faculty, department, year, and course choices. -->
+    <script src="js/data.js"></script>
+    <!-- Load the JavaScript file responsible for this screen after the shared scripts. The script uses the element ids in this HTML to add behaviour and display stored information. -->
+    <script src="js/select.js"></script>
+
+</body>
+</html>
