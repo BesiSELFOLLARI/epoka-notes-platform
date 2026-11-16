@@ -1,0 +1,96 @@
+
+/*
+ * FILE PURPOSE: Controls the appearance of the website using shared styles.
+ * CONNECTIONS: All HTML pages link to this stylesheet.
+ * Academic selection styles are used by select.html.
+ */
+
+/* Apply consistent sizing to all elements. */
+* {
+    box-sizing: border-box;
+}
+
+/* Main page appearance. */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+    line-height: 1.5;
+}
+
+/* Main headings. */
+h1, h2, h3 {
+    color: #172554;
+}
+
+/* Shared content container. */
+.wrap {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Shared panel appearance. */
+.panel {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #dbe3ef;
+}
+
+/* Shared button appearance. */
+button, .btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover, .btn:hover {
+    background: #1d4ed8;
+}
+
+/* Academic selection layout. */
+.choices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Individual academic selection cards. */
+.choice {
+    background: white;
+    border: 1px solid #dbe3ef;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.choice:hover {
+    border-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+/* Study-year selection layout. */
+.years {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+/* Make the year layout fit smaller screens. */
+@media (max-width: 600px) {
+    .years {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .wrap {
+        width: 95%;
+    }
+}
